@@ -8,14 +8,7 @@ import hashlib
 
 def inicio(request):
      if 'usuario' in request.session:
-         contexto = {}
-         menu_padre = Menu.objects.filter(tipo_menu = 'PADRE')
-         datos_usuarios = Usuario.objects.get(id_usuario = request.session.get('usuario'))
-         permisos = Permisos.objects.get(rol=datos_usuarios.rol_usuario)
-         contexto['permisos'] = permisos
-         contexto['lista_padre'] = menu_padre
-         contexto['datos_usuario'] = datos_usuarios
-         return render(request, 'index.html', contexto)
+         return render(request, 'index.html')
      else:
         return HttpResponseRedirect('salir/')
 
@@ -50,11 +43,12 @@ class Permiso(View):
     template_name = 'permisos/permisos.html'
 
     def get_queryset(self):
-        return self.model.objects.filter()
+        return self.model.objects.all()
 
     def get_context_data(self,**kwargs):
         contexto = {}
-        contexto['permisos'] = self.get_queryset()
+        contexto['per'] = self.get_queryset()
+        print(contexto['per'])
         contexto['form'] = self.form_class
         return contexto
         
