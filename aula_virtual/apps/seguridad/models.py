@@ -119,9 +119,7 @@ class Permisos(models.Model):
     id_permiso = models.AutoField(primary_key=True)
     menu = models.ManyToManyField(
         Menu, related_name="fk_menu", db_table='permiso_menu')
-    rol = models.ForeignKey(Roles, on_delete=models.CASCADE,
-                               related_name="fk_rol", db_column='id_rol',blank=False, null=False)
-
+    rol = models.ForeignKey(Roles, on_delete=models.CASCADE,related_name="fk_rol", db_column='id_rol',blank=False, null=False)
 
     class Meta:
         verbose_name = 'Permiso'
@@ -129,6 +127,4 @@ class Permisos(models.Model):
         db_table = 'permisos'
     
 
-    def __unicode__(self):
-        return self.id_rol
 

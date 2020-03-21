@@ -1,0 +1,70 @@
+{% extends 'index.html' %} {% block titulo %} Profesora virtual | Listado de
+permisos {% endblock titulo %}<!--  -->
+{% block body %}<!--  -->
+{% if libros %}
+<div class="card">
+  <div class="card-header">
+    <strong class="card-title">Permisos</strong>
+  </div>
+  <div class="table-stats order-table ov-h">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Rol</th>
+          <th>Accesos a estos menus</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in permisos %}
+        <tr>
+          <td>{{ p.id_permiso }}</td>
+          <td>{{ p.rol.rol_nombre }}</td>
+          <td>
+            {% for m in p.menu.all %}
+            <li>{{ m.nombre }}</li>
+            {% endfor %}
+          </td>
+          <td>
+            <a href="#" class="btn btn-primary">Editar</a>
+            <a href="#" class="btn btn-danger">Eliminar</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% else %}
+<h1>No existen permisos registrados</h1>
+{% endif %}
+<form method="POST">
+  {% csrf_token %}
+  <div class="card">
+    <div class="card-header">
+      <strong>Formulario de Registro</strong>
+    </div>
+    <div class="card-body card-block">
+      {{ form.as_p }}
+    </div>
+  </div>
+  <button type="submit" class="btn btn-success">Registrar</button>
+</form>
+
+{% endblock body %} {% block extrajs %}
+
+<script type="text/javascript">
+  var $ = jQuery.noConflict();
+  $(document).ready(function() {
+    $("#id_rol").toggleClass("js-example-basic-single");
+    $("#id_menu").toggleClass("js-example-basic-multiple");
+    $(".js-example-basic-single").select2();
+    $(".js-example-basic-multiple").select2({
+      width: "resolve", // need to override the changed default
+      placeholder: "Selecciona una opcion "
+    });
+  });
+</script>
+
+{% endblock extrajs %}
