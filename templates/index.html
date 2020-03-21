@@ -47,19 +47,17 @@
                     <li class="menu-item-has-children dropdown">
                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-book"></i>{{p.nombre}}</a>
                        
-                       
-                       {% for per in permisos.menu.all %}
-                       
-                       {% if p.id_menu == per.menu_padre %}
-                           <ul class="sub-menu children dropdown-menu">       
-                              <li><i class="fa fa-table"></i><a href="#">{{per.nombre}}</a></li>
-                           </ul>
-                       {% endif %}
-                                
-                       
-                       {% endfor %}
+                        {% if permisos %}
+                            <ul class="sub-menu children dropdown-menu">   
+                                {% for per in permisos.menu.all %}
+                                    {% if per.menu_padre.id_menu == p.id_menu %}
+                                        <li><i class="fa fa-table"></i><a href="#">{{per.nombre}}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                            
                            
-                    
                     </li>    
                     {% endfor %}
                         

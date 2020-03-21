@@ -14,12 +14,6 @@ def inicio(request):
          print(permisos)
          contexto['lista_padre'] = menu_padre
          contexto['datos_usuario'] = datos_usuarios
-         #permiso = Menu.objects.filter(
-         #    fk_permiso_modmenu__id_rol__fk_rol__id_usuario=request.session.get('usuario'), id_genr_estado=97).values()
-         #usuario = ConfUsuario.objects.get(
-         #    id_usuario=request.session.get('usuario'))
-         #contexto['permisos'] = permiso
-         #contexto['info_usuario'] = usuario
          return render(request, 'index.html', contexto)
      else:
         return HttpResponseRedirect('salir/')

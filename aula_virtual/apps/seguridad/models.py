@@ -109,8 +109,11 @@ class Menu(models.Model):
         return self.nombre 
     
     
-    def __unicode__(self):
+    def __int__(self):
         return self.id_menu
+    
+    def __int__(self):
+        return self.menu_padre
 
 class Permisos(models.Model):
     id_permiso = models.AutoField(primary_key=True)
