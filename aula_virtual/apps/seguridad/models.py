@@ -3,40 +3,73 @@ from django.db import models
 # Create your models here.
 
 class Personas(models.Model):
-    ESTADOS_CHOICES = [
-                        ('a','activo'),
-                        ('i','inactivo')
-                      ]
+    ESTADO_CHOICES = [
+        ('INACTIVO', 'Inactivo'),
+        ('ACTIVO', 'Activo')
+    ]
+
     id_persona = models.AutoField(primary_key=True)
     nombres = models.CharField(null=False, max_length=50,blank=False)
     apellidos = models.CharField(null=False, max_length=50,blank=False)
-    cedula = models.CharField(blank=True,null=True,default="No registrado",max_length=50)
-    estado = models.CharField(blank=False,max_length=50,choices=ESTADOS_CHOICES,null=False)
+    cedula = models.CharField(blank=False,null=False,max_length=50)
+    estado = models.CharField(blank=False,max_length=50,choices=ESTADO_CHOICES,null=False)
+    foto = models.ImageField(upload_to='usuarios_avatar',default='default/default_avatar.png')
 
     class Meta:
         verbose_name ='Persona'
         verbose_name_plural='Personas',
         db_table ='persona'
+    
+    def __unicode__(self):
+        return self.id_persona
 
     def __str__(self):
-        return self.nombres,self.apellidos
+        return self.nombres
 
-class Usuario(models.Model):
+class Roles(models.Model):
     ESTADO_CHOICES = [
         ('INACTIVO', 'Inactivo'),
         ('ACTIVO', 'Activo')
     ]
+
     TIPO_CHOICES = [
         ('PROFESOR', 'Profesor'),
+        ('ADMINISTRADOR','Administrador'),
         ('ALUMNO', 'Alumno')
-    ]    
+    ]
+
+    id_rol = models.AutoField(primary_key=True)
+    rol_nombre = models.CharField(max_length=45,null=False,blank=False,choices=TIPO_CHOICES)
+    rol_estado = models.CharField(max_length=45,choices=ESTADO_CHOICES,null= False,blank=False)
+
+
+    class Meta:
+        verbose_name = 'Rol'
+        verbose_name_plural = 'Roles',
+        db_table = 'rol'
+    
+
+    def __unicode__(self):
+        return self.id_rol
+    
+    def __str__(self):
+        return self.rol_nombre
+    
+
+class Usuario(models.Model):
+    
+    ESTADO_CHOICES = [
+        ('INACTIVO', 'Inactivo'),
+        ('ACTIVO', 'Activo')
+    ]
+
     id_usuario = models.AutoField(primary_key=True)
     usuario = models.CharField(max_length=45, unique=True, blank=False, null=False)
     correo = models.EmailField(blank=True,max_length=80,null=True,default='example@gmail.com')
     clave = models.CharField(max_length=45, blank=False, null=False)
     id_persona = models.ForeignKey(
         Personas, on_delete=models.CASCADE, db_column='id_persona')
-    tipo_usuario = models.CharField(null=False,blank=False,choices=TIPO_CHOICES,max_length=50)
+    rol_usuario = models.ForeignKey(Roles,null=False,blank=False,on_delete=models.CASCADE,db_column='rol_usuario')
     estado = models.CharField(blank=False,max_length=50,choices=ESTADO_CHOICES,null=False)
 
 
@@ -49,14 +82,23 @@ class Usuario(models.Model):
         return self.usuario
 
 class Menu(models.Model):
+
     ESTADO_CHOICES = [
         ('INACTIVO', 'Inactivo'),
         ('ACTIVO', 'Activo')
     ]
+
+    TIPO_CHOICES = [
+        ('PADRE', 'padre'),
+        ('HIJO', 'hijo')
+    ]
+
     id_menu = models.AutoField(primary_key=True)
-    nombre = models.CharField(max_length=45, blank=False, unique=True, null=False, db_column='descripcion')
+    nombre = models.CharField(max_length=45, blank=False, unique=True, null=False)
+    tipo_menu = models.CharField(max_length=45,blank=False,null=False, choices=TIPO_CHOICES)
+    menu_padre = models.ForeignKey('self',on_delete=models.SET_NULL,null=True, blank=True, db_column='menu_padre')
     estado = models.CharField(blank=False,max_length=50,choices=ESTADO_CHOICES,null=False)
-    url = models.CharField(blank=False, null=False, max_length=60)
+    url = models.CharField(blank=False, null=False, max_length=60,default='#')
 
     class Meta:
         verbose_name = 'Menu'
@@ -66,6 +108,7 @@ class Menu(models.Model):
     def __str__(self):
         return self.nombre 
     
+    
     def __unicode__(self):
         return self.id_menu
 
@@ -73,8 +116,8 @@ class Permisos(models.Model):
     id_permiso = models.AutoField(primary_key=True)
     menu = models.ManyToManyField(
         Menu, related_name="fk_menu", db_table='permiso_menu')
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE,
-                               related_name="fk_usuario", db_column='id_rol',blank=False, null=False)
+    rol = models.ForeignKey(Roles, on_delete=models.CASCADE,
+                               related_name="fk_rol", db_column='id_rol',blank=False, null=False)
 
 
     class Meta:
@@ -84,4 +127,5 @@ class Permisos(models.Model):
     
 
     def __unicode__(self):
-        return self.id_rol,self.acciones
+        return self.id_rol
+
