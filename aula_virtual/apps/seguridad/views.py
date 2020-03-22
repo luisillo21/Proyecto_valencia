@@ -40,7 +40,7 @@ def usuarios(request):
     pass
 
 
-
+#-- CRUD DE LA PANTALLA PERMISOS
 
 class Permiso(ListView):
     model = Permisos
@@ -75,9 +75,68 @@ def eliminar_permiso(request,id):
 
     return render(request,'permisos/eliminar_permisos.html',{'permiso':permiso})
 
-class Actualizarpermiso(UpdateView):
-    model = Permisos
-    form_class = formPermisos
-    template_name = 'permisos/permisos.html'
-    success_url = reverse_lazy('seguridad:permisos')
+#-- CRUD DE PERSONAS
 
+class Persona(ListView):
+    model = Personas
+    context_object_name = 'per'
+    queryset = model.objects.filter(estado='ACTIVO')
+    template_name = 'personas/personas.html'
+
+class AddPersona(CreateView):
+    model = Personas
+    form_class = formPersonas
+    template_name = 'personas/agregar_personas.html'
+    success_url = reverse_lazy('seguridad:personas')
+
+class EditPersona(UpdateView):
+    model = Personas
+    form_class = formPersonas
+    template_name = 'personas/agregar_personas.html'
+    success_url = reverse_lazy('seguridad:personas')
+
+def eliminar_persona(request,id):
+    persona = Personas.objects.get(id_persona=id)
+    try:
+        if request.method == 'POST':
+           persona.estado = 'INACTIVO'
+           persona.save()
+           return redirect('seguridad:personas')
+
+    except Exception as e:
+        return render(request, 'personas/eliminar_personas.html', {'error':e})
+
+    return render(request,'personas/eliminar_personas.html',{'personas':persona})
+
+#-- CRUD DE USUARIO
+
+class Usuario_listar(ListView):
+    model = Usuario
+    context_object_name = 'usuario'
+    queryset = model.objects.filter(estado='ACTIVO')
+    template_name = 'usuarios/usuarios.html'
+
+class AddUsuario(CreateView):
+    model = Usuario
+    form_class = formUsuarios
+    template_name = 'usuarios/agregar_usuarios.html'
+    success_url = reverse_lazy('seguridad:usuarios')
+
+class EditUsuario(UpdateView):
+    model = Usuario
+    form_class = formUsuarios
+    template_name = 'usuarios/agregar_usuarios.html'
+    success_url = reverse_lazy('seguridad:usuarios')
+
+def eliminar_usuario(request,id):
+    usuario = Usuario.objects.get(id_usuario=id)
+    try:
+        if request.method == 'POST':
+           usuario.estado = 'INACTIVO'
+           usuario.save()
+           return redirect('seguridad:usuarios')
+
+    except Exception as e:
+        return render(request, 'usuarios/eliminar_usuarios.html', {'error':e})
+
+    return render(request,'usuarios/eliminar_usuarios.html',{'usuario':usuario})

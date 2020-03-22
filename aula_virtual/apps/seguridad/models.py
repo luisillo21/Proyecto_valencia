@@ -11,8 +11,8 @@ class Personas(models.Model):
     id_persona = models.AutoField(primary_key=True)
     nombres = models.CharField(null=False, max_length=50,blank=False)
     apellidos = models.CharField(null=False, max_length=50,blank=False)
-    cedula = models.CharField(blank=False,null=False,max_length=50)
-    estado = models.CharField(blank=False,max_length=50,choices=ESTADO_CHOICES,null=False)
+    cedula = models.CharField(blank=False,null=False,unique=True,max_length=50)
+    estado = models.CharField(blank=True,max_length=50,choices=ESTADO_CHOICES,null=True,default='ACTIVO')
     foto = models.ImageField(upload_to='usuarios_avatar',default='default/default_avatar.png')
 
     class Meta:
@@ -35,7 +35,8 @@ class Roles(models.Model):
     TIPO_CHOICES = [
         ('PROFESOR', 'Profesor'),
         ('ADMINISTRADOR','Administrador'),
-        ('ALUMNO', 'Alumno')
+        ('ALUMNO', 'Alumno'),
+        ('EMPLEADO ADMINITRATIVO', 'Empleado administrativo')
     ]
 
     id_rol = models.AutoField(primary_key=True)
@@ -65,18 +66,21 @@ class Usuario(models.Model):
 
     id_usuario = models.AutoField(primary_key=True)
     usuario = models.CharField(max_length=45, unique=True, blank=False, null=False)
-    correo = models.EmailField(blank=True,max_length=80,null=True,default='example@gmail.com')
-    clave = models.CharField(max_length=45, blank=False, null=False)
+    correo = models.EmailField(blank=True,max_length=80,unique=True,null=True,default='example@gmail.com')
+    clave = models.CharField(max_length=45, blank=False,unique=True,null=False)
     id_persona = models.ForeignKey(
-        Personas, on_delete=models.CASCADE, db_column='id_persona')
+        Personas, on_delete=models.CASCADE,unique=True,db_column='id_persona')
     rol_usuario = models.ForeignKey(Roles,null=False,blank=False,on_delete=models.CASCADE,db_column='rol_usuario')
-    estado = models.CharField(blank=False,max_length=50,choices=ESTADO_CHOICES,null=False)
+    estado = models.CharField(blank=False,max_length=50,choices=ESTADO_CHOICES,null=True,default='ACTIVO')
 
 
     class Meta:
         verbose_name = 'Usuario'
         verbose_name_plural = 'Usuarios',
         db_table = 'usuario'
+
+    def __unicode__(self):
+        return self.id_usuario
 
     def __str__(self):
         return self.usuario
