@@ -1,0 +1,36 @@
+{% extends 'index.html' %} {% load crispy_forms_tags %}
+<!--               -->{% block titulo %} Profesora virtual | Listado de permisos
+{% endblock titulo %}<!--  -->
+{% block body %}<!--  -->
+
+<form method="POST">
+  {% csrf_token %}
+  <div class="card">
+    <div class="card-header">
+      <strong>Formulario de Registro</strong>
+    </div>
+    <div class="card-body">
+      {{ form.rol|as_crispy_field }} <br />
+      {{ form.menu|as_crispy_field }}
+    </div>
+  </div>
+  <button type="submit" class="btn btn-success">Registrar</button>
+  <a class="btn btn-danger" href="{% url 'seguridad:permisos' %}">Cancelar</a>
+</form>
+
+{% endblock body %} {% block extrajs %}
+
+<script type="text/javascript">
+  var $ = jQuery.noConflict();
+  $(document).ready(function() {
+    $("#id_rol").toggleClass("js-example-basic-single");
+    $("#id_menu").toggleClass("js-example-basic-multiple");
+    $(".js-example-basic-single").select2();
+    $(".js-example-basic-multiple").select2({
+      width: "resolve", // need to override the changed default
+      placeholder: "Selecciona una opcion "
+    });
+  });
+</script>
+
+{% endblock extrajs %}

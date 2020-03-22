@@ -131,6 +131,8 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = 'media'
 
+LANGUAGE_CODE = 'es-ec'
+
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 INTERNAL_IPS = {'127.0.0.1', }

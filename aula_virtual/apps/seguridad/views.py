@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,render_to_response
 from django.views.generic import View,TemplateView,ListView,UpdateView,CreateView,DeleteView
 from django.http import HttpResponseRedirect, HttpResponse
 from .models import *
@@ -42,30 +42,24 @@ def usuarios(request):
 
 
 
-class Permiso(View):
+class Permiso(ListView):
+    model = Permisos
+    context_object_name = 'per'
+    queryset = model.objects.filter(estado='ACTIVO')
+    template_name = 'permisos/permisos.html'
+    
+
+class AddPermiso(CreateView):
     model = Permisos
     form_class = formPermisos
-    template_name = 'permisos/permisos.html'
+    template_name = 'permisos/agregar_permiso.html'
+    success_url = reverse_lazy('seguridad:permisos')
 
-    def get_queryset(self):
-        return self.model.objects.filter(estado='ACTIVO')
-
-    def get_context_data(self,**kwargs):
-        contexto = {}
-        contexto['per'] = self.get_queryset()
-        print(contexto['per'])
-        contexto['form'] = self.form_class
-        return contexto
-        
-    def get(self,request,*args,**kwargs):
-        return render(request,self.template_name,self.get_context_data())
-
-    def post(self,request,*args,**kwargs):
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('seguridad:permisos')
-
+class EditPermiso(UpdateView):
+    model = Permisos
+    form_class = formPermisos
+    template_name = 'permisos/agregar_permiso.html'
+    success_url = reverse_lazy('seguridad:permisos')
 
 
 def eliminar_permiso(request,id):

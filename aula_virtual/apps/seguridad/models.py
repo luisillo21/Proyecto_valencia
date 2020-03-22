@@ -125,8 +125,8 @@ class Permisos(models.Model):
     id_permiso = models.AutoField(primary_key=True)
     menu = models.ManyToManyField(
         Menu, related_name="fk_menu", db_table='permiso_menu')
-    rol = models.ForeignKey(Roles, on_delete=models.CASCADE,related_name="fk_rol", db_column='id_rol',blank=False, null=False)
-    estado = models.CharField(blank=False,max_length=50,choices=ESTADO_CHOICES,null=False)
+    rol = models.ForeignKey(Roles, on_delete=models.CASCADE,related_name="fk_rol",unique=True,db_column='id_rol',blank=False, null=False)
+    estado = models.CharField(blank=True,max_length=50,choices=ESTADO_CHOICES,null=True,default='ACTIVO')
 
     class Meta:
         verbose_name = 'Permiso'

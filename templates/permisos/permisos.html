@@ -3,6 +3,12 @@
 {% endblock titulo %}<!--  -->
 {% block body %}<!--  -->
 
+<a
+  href="{% url 'seguridad:agregar_permiso' %}"
+  class="btn btn-primary text-light"
+  >Agregar nuevo permiso</a
+>
+
 {% if per %}
 <div class="card">
   <div class="card-header">
@@ -29,7 +35,11 @@
             {% endfor %}
           </td>
           <td>
-            <a href="#" class="btn btn-primary">Editar</a>
+            <a
+              href="{% url 'seguridad:editar_permiso' p.id_permiso %}"
+              class="btn btn-primary"
+              >Editar</a
+            >
             <a
               href="{% url 'seguridad:eliminar_permiso' p.id_permiso %}"
               class="btn btn-danger"
@@ -44,34 +54,4 @@
 </div>
 {% else %}
 <h1>No existen permisos registrados</h1>
-{% endif %}
-<form method="POST">
-  {% csrf_token %}
-  <div class="card">
-    <div class="card-header">
-      <strong>Formulario de Registro</strong>
-    </div>
-    <div class="card-body">
-      {{ form.rol|as_crispy_field }} <br />
-      {{ form.menu|as_crispy_field }}
-    </div>
-  </div>
-  <button type="submit" class="btn btn-success">Registrar</button>
-</form>
-
-{% endblock body %} {% block extrajs %}
-
-<script type="text/javascript">
-  var $ = jQuery.noConflict();
-  $(document).ready(function() {
-    $("#id_rol").toggleClass("js-example-basic-single");
-    $("#id_menu").toggleClass("js-example-basic-multiple");
-    $(".js-example-basic-single").select2();
-    $(".js-example-basic-multiple").select2({
-      width: "resolve", // need to override the changed default
-      placeholder: "Selecciona una opcion "
-    });
-  });
-</script>
-
-{% endblock extrajs %}
+{% endif %} {% endblock body %}
