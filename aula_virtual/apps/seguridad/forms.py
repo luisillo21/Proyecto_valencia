@@ -17,5 +17,6 @@ class formPermisos(forms.ModelForm):
             "menu" : "Menu",
         }
 
+
     
  

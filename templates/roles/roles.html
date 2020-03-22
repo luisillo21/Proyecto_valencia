@@ -1,12 +1,11 @@
-{% extends 'index.html' %} {% load crispy_forms_tags %}
-<!--               -->{% block titulo %} Profesora virtual | Listado de permisos
-{% endblock titulo %}<!--  -->
+{% extends 'index.html' %} {% block titulo %} Profesora virtual | Listado de
+permisos {% endblock titulo %}<!--  -->
 {% block body %}<!--  -->
 
-{% if per %}
+{% if rol %}
 <div class="card">
   <div class="card-header">
-    <strong class="card-title">Permisos</strong>
+    <strong class="card-title">Roles del sistema</strong>
   </div>
   <div class="table-stats order-table ov-h">
     <table class="table datatable text-center text-dark">
@@ -14,20 +13,14 @@
         <tr class="text-center text-dark">
           <th>ID</th>
           <th>Rol</th>
-          <th>Accesos a estos menus</th>
           <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
-        {% for p in per %}
+        {% for r in roles %}
         <tr>
-          <td>{{ p.id_permiso }}</td>
-          <td>{{ p.rol.rol_nombre }}</td>
-          <td>
-            {% for m in p.menu.all %}
-            <li>{{ m.nombre }}</li>
-            {% endfor %}
-          </td>
+          <td>{{ r.id_rol }}</td>
+          <td>{{ r.rol_nombre }}</td>
           <td>
             <a href="#" class="btn btn-primary">Editar</a>
             <a
@@ -52,8 +45,7 @@
       <strong>Formulario de Registro</strong>
     </div>
     <div class="card-body">
-      {{ form.rol|as_crispy_field }} <br />
-      {{ form.menu|as_crispy_field }}
+      {{ form.as_p }}
     </div>
   </div>
   <button type="submit" class="btn btn-success">Registrar</button>

@@ -116,15 +116,25 @@ class Menu(models.Model):
         return self.menu_padre
 
 class Permisos(models.Model):
+
+    ESTADO_CHOICES = [
+        ('INACTIVO', 'Inactivo'),
+        ('ACTIVO', 'Activo')
+    ]
+
     id_permiso = models.AutoField(primary_key=True)
     menu = models.ManyToManyField(
         Menu, related_name="fk_menu", db_table='permiso_menu')
     rol = models.ForeignKey(Roles, on_delete=models.CASCADE,related_name="fk_rol", db_column='id_rol',blank=False, null=False)
+    estado = models.CharField(blank=False,max_length=50,choices=ESTADO_CHOICES,null=False)
 
     class Meta:
         verbose_name = 'Permiso'
         verbose_name_plural = 'Permisos',
         db_table = 'permisos'
     
+
+    def __int__(self):
+        return self.id_permiso
 
 
