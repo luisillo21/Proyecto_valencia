@@ -39,10 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'aula_virtual.apps.seguridad',
     'aula_virtual.apps.evaluacion',
+    'aula_virtual.apps.asignacion',
     'crispy_forms',
-    'multiselectfield',
-    'dal',
-    'dal_select2',
     ]
 
 MIDDLEWARE = [

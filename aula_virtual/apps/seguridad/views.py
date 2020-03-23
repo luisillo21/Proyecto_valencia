@@ -27,17 +27,14 @@ def login(request):
                 return redirect("seguridad:inicio") 
     except Exception as e:
         contexto['error'] = "Usuario o contraseña incorrectos"
-        return render(request, 'BASE/Login.html', contexto)   
-    return render(request,'BASE/Login.html')
+        return render(request, 'Login.html', contexto)
+    return render(request,'Login.html')
 
 def salir(request):
     del request.session['usuario']
     return redirect('seguridad:inicio')
 
 
-
-def usuarios(request):
-    pass
 
 
 #-- CRUD DE LA PANTALLA PERMISOS

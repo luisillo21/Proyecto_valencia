@@ -1,0 +1,29 @@
+{% extends 'index.html' %} {% block titulo %} Aula virtual | confirmación de
+Eliminación {% endblock titulo %} {% block body %} {% if error %}
+<div class="alert alert-danger alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <strong>Advertencia: </strong> {{ error }}
+</div>
+{% endif %}
+<form
+  method="post"
+  action="{% url 'asignacion:eliminar_alumnos' alumno.id_alumno %}"
+>
+  {% csrf_token %}
+  <p class="text-danger h4"><strong>¿Desea eliminar a este alumno del sistema?</strong></p>
+  <hr style="background-color: black;" />
+  <label> <strong>DATOS DE ESTE ALUMNO</strong></label><br>
+  <br/>Curso:<label>{{alumno.curso.curso}} {{alumno.curso.paralelo}}</label>
+  <br/>Nombre:<label>{{alumno.persona.nombres}} {{alumno.persona.apellidos}}</label>
+  <br/>Identificación:<label>{{alumno.persona.cedula}}</label>
+  <hr style="background-color: black;" />
+  <br>
+  <button type="submit" class="btn btn-danger">Confirmar</button>
+  <a class="btn btn-success text-light" href="{% url 'asignacion:alumnos' %}"
+    >Cancelar</a
+  >
+</form>
+
+{% endblock body %}

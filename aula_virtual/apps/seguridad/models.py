@@ -24,7 +24,8 @@ class Personas(models.Model):
         return self.id_persona
 
     def __str__(self):
-        return self.nombres
+        return '{} {} Identificación: {}'.format(self.nombres,self.apellidos,self.cedula)
+
 
 class Roles(models.Model):
     ESTADO_CHOICES = [
@@ -65,9 +66,9 @@ class Usuario(models.Model):
     ]
 
     id_usuario = models.AutoField(primary_key=True)
-    usuario = models.CharField(max_length=45, unique=True, blank=False, null=False)
-    correo = models.EmailField(blank=True,max_length=80,unique=True,null=True,default='example@gmail.com')
-    clave = models.CharField(max_length=45, blank=False,unique=True,null=False)
+    usuario = models.CharField(max_length=45,  blank=False, null=False)
+    correo = models.EmailField(blank=True,max_length=80,null=True,default='example@gmail.com')
+    clave = models.CharField(max_length=45, blank=False,null=False)
     id_persona = models.ForeignKey(
         Personas, on_delete=models.CASCADE,unique=True,db_column='id_persona')
     rol_usuario = models.ForeignKey(Roles,null=False,blank=False,on_delete=models.CASCADE,db_column='rol_usuario')

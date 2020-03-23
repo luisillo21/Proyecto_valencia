@@ -1,0 +1,55 @@
+{% extends 'index.html' %} {% load crispy_forms_tags %}
+<!--               -->{% block titulo %} Profesora virtual | Listado de Alumnos
+{% endblock titulo %}<!--  -->
+{% block body %}<!--  -->
+
+<a
+  href="{% url 'asignacion:agregar_alumnos' %}"
+  class="btn btn-primary text-light"
+  >Agregar nuevo alumno</a
+>
+
+{% if alumnos %}
+
+            <div class="card">
+                            <div class="card-header">
+                                <strong class="card-title">Asignacion | Alumnos</strong>
+                            </div>
+                            <div class="card-body">
+                                <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Alumno</th>
+                                            <th>Curso</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for c in alumnos %}
+                                        <tr>
+                                            <td>{{c.id_alumno}} </td>
+                                            <td>
+                                                Nombre: {{c.persona.nombres}} {{c.persona.apellidos}}
+                                                <br>
+                                                Identificación: {{c.persona.cedula}}
+                                            </td>
+                                            <td>{{c.curso.curso}} {{c.curso.paralelo}}</td>
+                                          <td>
+            <a href="{% url 'asignacion:editar_alumnos' c.id_alumno %}" class="btn btn-primary">Editar</a>
+            <a href="{% url 'asignacion:eliminar_alumnos' c.id_alumno %}" class="btn btn-danger">Eliminar</a>
+          </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+            </div>
+{% else %}
+<h1>No existen Cursos registrados</h1>
+
+
+
+{% endif %} {% endblock body %}
+
+
