@@ -41,9 +41,19 @@ def salir(request):
 
 class Permiso(ListView):
     model = Permisos
-    context_object_name = 'per'
     queryset = model.objects.filter(estado='ACTIVO')
     template_name = 'permisos/permisos.html'
+
+    def get_context_data(self, **kwargs):
+        contexto = {}
+        contexto['per'] = self.get_queryset()
+        return contexto
+
+    def get(self, request, *args, **kwargs):
+        if 'usuario' in request.session:
+            return render(request, self.template_name, self.get_context_data())
+        else:
+            return redirect('seguridad:iniciar_sesion')
     
 
 class AddPermiso(CreateView):
@@ -72,13 +82,23 @@ def eliminar_permiso(request,id):
 
     return render(request,'permisos/eliminar_permisos.html',{'permiso':permiso})
 
-#-- CRUD DE PERSONAS
+#-- CRUD DE PERSONAS------------------------------------------------------------------
 
 class Persona(ListView):
     model = Personas
-    context_object_name = 'per'
     queryset = model.objects.filter(estado='ACTIVO')
     template_name = 'personas/personas.html'
+
+    def get_context_data(self, **kwargs):
+        contexto = {}
+        contexto['per'] = self.get_queryset()
+        return contexto
+
+    def get(self, request, *args, **kwargs):
+        if 'usuario' in request.session:
+            return render(request, self.template_name, self.get_context_data())
+        else:
+            return redirect('seguridad:iniciar_sesion')
 
 class AddPersona(CreateView):
     model = Personas
@@ -105,13 +125,24 @@ def eliminar_persona(request,id):
 
     return render(request,'personas/eliminar_personas.html',{'personas':persona})
 
-#-- CRUD DE USUARIO
+#-- CRUD DE USUARIO-----------------------------------------------------------------
 
 class Usuario_listar(ListView):
     model = Usuario
     context_object_name = 'usuario'
     queryset = model.objects.filter(estado='ACTIVO')
     template_name = 'usuarios/usuarios.html'
+
+    def get_context_data(self, **kwargs):
+        contexto = {}
+        contexto['usuario'] = self.get_queryset()
+        return contexto
+
+    def get(self, request, *args, **kwargs):
+        if 'usuario' in request.session:
+            return render(request, self.template_name, self.get_context_data())
+        else:
+            return redirect('seguridad:iniciar_sesion')
 
 class AddUsuario(CreateView):
     model = Usuario

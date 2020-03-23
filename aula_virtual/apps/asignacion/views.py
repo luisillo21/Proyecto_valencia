@@ -10,9 +10,19 @@ from django.urls import reverse_lazy
 
 class Cursos(ListView):
     model = Curso
-    context_object_name = 'cursos'
     queryset = model.objects.filter(estado='ACTIVO')
     template_name = 'cursos/cursos.html'
+
+    def get_context_data(self, **kwargs):
+        contexto = {}
+        contexto['cursos'] = self.get_queryset()
+        return contexto
+
+    def get(self, request, *args, **kwargs):
+        if 'usuario' in request.session:
+            return render(request, self.template_name, self.get_context_data())
+        else:
+            return redirect('seguridad:iniciar_sesion')
 
 
 class AddCursos(CreateView):
@@ -45,9 +55,19 @@ def eliminar_cursos(request, id):
 
 class Alumnos(ListView):
     model = Alumno
-    context_object_name = 'alumnos'
     queryset = model.objects.filter(estado='ACTIVO')
     template_name = 'alumnos/alumnos.html'
+
+    def get_context_data(self, **kwargs):
+        contexto = {}
+        contexto['alumnos'] = self.get_queryset()
+        return contexto
+
+    def get(self, request, *args, **kwargs):
+        if 'usuario' in request.session:
+            return render(request, self.template_name, self.get_context_data())
+        else:
+            return redirect('seguridad:iniciar_sesion')
 
 
 class AddAlumnos(CreateView):
