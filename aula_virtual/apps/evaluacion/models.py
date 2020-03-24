@@ -47,10 +47,11 @@ class Examen(models.Model):
 class Anexos(models.Model):
     id_anexo = models.AutoField(primary_key=True)
     link = models.TextField(null=False, blank=False)
+    nombre = models.CharField(max_length=45,null=False,blank=False,unique=True)
     examen = models.ForeignKey(Examen,on_delete=models.CASCADE,null=False)
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, null=False, blank=False,
                                 related_name='autor_del_anexo', db_column='usuario')
-    nota_referencia = models.IntegerField(Materia, db_column='materia', null=True, blank=True,default=6)
+    nota_referencia = models.IntegerField(null=True, blank=True,default=6)
     estado = models.CharField(default='ACTIVO', blank=True, null=True, max_length=45, choices=ESTADO_CHOICES)
 
     def __unicode__(self):

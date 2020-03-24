@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(('aula_virtual.apps.seguridad.urls', 'seguridad'))),
     path('', include(('aula_virtual.apps.asignacion.urls', 'asignacion'))),
+    path('', include(('aula_virtual.apps.evaluacion.urls', 'evaluacion'))),
 ]
 
