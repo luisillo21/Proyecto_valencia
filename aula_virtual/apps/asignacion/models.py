@@ -3,6 +3,8 @@ from django.db import models
 # Create your models here.
 from aula_virtual.apps.seguridad.models import Personas
 
+from aula_virtual.apps.evaluacion.models import Examen
+
 ESTADO_CHOICES = [
     ('INACTIVO', 'Inactivo'),
     ('ACTIVO', 'Activo')
@@ -44,3 +46,18 @@ class Alumno(models.Model):
         return self.persona.nombres
 
 
+class Asignar_examen(models.Model):
+    id_asig_examen= models.AutoField(primary_key=True)
+    examen = models.ForeignKey(Examen,on_delete=models.CASCADE,related_name='fk_examen_asig')
+    curso = models.ManyToManyField(Curso,db_table='curso_examenes',related_name='fk_curso_examenes')
+
+    class Meta:
+        verbose_name = 'Asignar examen'
+        verbose_name_plural = 'Asignar examen',
+        db_table = 'asignar_examen'
+
+    def __unicode__(self):
+        return self.id_asig_examen
+
+    def __str__(self):
+        return self.examen.nombre
