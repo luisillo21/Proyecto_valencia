@@ -96,3 +96,48 @@ def eliminar_alumnos(request, id):
         return render(request, 'alumnos/eliminar_alumnos.html', {'error': e})
 
     return render(request, 'alumnos/eliminar_alumnos.html', {'alumno': alumno})
+
+
+class Asignaciones(ListView):
+    model = Asignar_examen
+    queryset = model.objects.filter(estado='ACTIVO')
+    template_name = 'asignar_examenes/asignaciones.html'
+
+    def get_context_data(self, **kwargs):
+        contexto = {}
+        contexto['asignaciones'] = self.get_queryset()
+        return contexto
+
+    def get(self, request, *args, **kwargs):
+        if 'usuario' in request.session:
+            return render(request, self.template_name, self.get_context_data())
+        else:
+            return redirect('asignacion:asignaciones')
+
+
+class AddAsignacion(CreateView):
+    model = Asignar_examen
+    form_class = formAsignar
+    template_name = 'asignar_examenes/agregar_asignaciones.html'
+    success_url = reverse_lazy('asignacion:asignaciones')
+
+
+class EditAsignacion(UpdateView):
+    model = Asignar_examen
+    form_class = formAsignar
+    template_name = 'asignar_examenes/agregar_asignaciones.html'
+    success_url = reverse_lazy('asignacion:asignaciones')
+
+
+def eliminar_asignacion(request, id):
+    asig = Asignar_examen.objects.get(id_asig_examen=id)
+    try:
+        if request.method == 'POST':
+            asig.estado = 'INACTIVO'
+            asig.save()
+            return redirect('asignacion:asignaciones')
+
+    except Exception as e:
+        return render(request, 'asignar_examenes/eliminar_asignaciones.html', {'error': e})
+
+    return render(request, 'asignar_examenes/eliminar_asignaciones.html', {'asig': asig})

@@ -33,6 +33,7 @@ class Alumno(models.Model):
     persona = models.ForeignKey(Personas,on_delete=models.CASCADE,related_name='fk_persona_alumno',null=False,db_column='persona_alumno')
     estado = models.CharField(max_length=45,null=True,blank=True,default='ACTIVO',choices=ESTADO_CHOICES)
     curso = models.ForeignKey(Curso, on_delete=models.CASCADE,null=True,blank=True)
+    estado = models.CharField(max_length=45,null=True,blank=True,default='ACTIVO',choices=ESTADO_CHOICES)
 
     class Meta:
         verbose_name = 'alumno'
@@ -50,6 +51,7 @@ class Asignar_examen(models.Model):
     id_asig_examen= models.AutoField(primary_key=True)
     examen = models.ForeignKey(Examen,on_delete=models.CASCADE,related_name='fk_examen_asig')
     curso = models.ManyToManyField(Curso,db_table='curso_examenes',related_name='fk_curso_examenes')
+    estado = models.CharField(max_length=45,null=True,blank=True,default='ACTIVO',choices=ESTADO_CHOICES)
 
     class Meta:
         verbose_name = 'Asignar examen'

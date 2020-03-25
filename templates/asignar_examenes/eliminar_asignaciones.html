@@ -1,0 +1,33 @@
+{% extends 'index.html' %} {% block titulo %} Biblioteca.dev | confirmación de
+Eliminación {% endblock titulo %} {% block body %} {% if error %}
+<div class="alert alert-danger alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <strong>Advertencia: </strong> {{ error }}
+</div>
+{% endif %}
+<form
+  method="post"
+  action="{% url 'asignacion:eliminar_asignaciones' asig.id_asig_examen %}"
+>
+  {% csrf_token %}
+  <p class="text-danger h4"><strong>¿Desea eliminar esta asignacion?</strong></p>
+  <hr style="background-color: black;" />
+  <label>Examen:</label>
+  <br /><label>{{asig.examen.nombre}}</label>
+  <hr style="background-color: black;" />
+  <label>Cursos asignados:</label>
+  <br />
+  {% for m in asig.curso.all %}
+  <label>{{m.curso}} {{m.paralelo}}</label><br>
+  {% endfor %}
+  <hr style="background-color: black;" />
+
+  <button type="submit" class="btn btn-danger">Confirmar</button>
+  <a class="btn btn-success text-light" href="{% url 'asignacion:asignaciones' %}"
+    >Cancelar</a
+  >
+</form>
+
+{% endblock body %}

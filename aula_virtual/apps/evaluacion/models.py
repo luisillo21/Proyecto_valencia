@@ -82,3 +82,4 @@ class Pregunta(models.Model):
         verbose_name = 'Pregunta',
         verbose_name_plural = 'Preguntas',
         db_table = 'preguntas'
+

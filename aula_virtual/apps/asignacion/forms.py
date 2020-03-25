@@ -37,3 +37,16 @@ class formAlumno(forms.ModelForm):
             "curso" : "Curso al que pertenece",
         }
 
+class formAsignar(forms.ModelForm):
+    class Meta:
+        model = Asignar_examen
+        fields = [
+            "examen",
+            "curso",
+            ]
+
+        labels = {
+            "persona" : "Persona",
+            "curso" : "Curso al que pertenece",
+        }
+
