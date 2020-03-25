@@ -168,11 +168,13 @@ def ver_examenes(request):
 
 def realizar_examen(request,id):
     contexto = {}
-    lista_anexo =[]
+    lista_anexo = []
     examen = Examen.objects.get(id_examen=id)
     preguntas = list(Pregunta.objects.filter(examen_id__id_examen= id)[:10])
     contexto['examen'] = examen
+    contexto['lista_anexos']: lista_anexo
     contexto['preguntas'] = preguntas
+
     total = 10
 
 
@@ -187,15 +189,16 @@ def realizar_examen(request,id):
                 else:
                     total = total - 1
                     lista_anexo.append(p)
-        if total > 6:
-            contexto['mensaje'] = 'FELICIDADES!! tu nota es:{} !'.format(total)
-            return render(request, 'realizar_examen/realizar_examen.html', contexto)
-        if total <= 6:
-            contexto['anexos']: lista_anexo
-            print(lista_anexo)
-            contexto['mala_nota'] = 'NESECITAS MEJORAR AMIGO!! tu nota es:{}! Puedes revisar estos videos para reforzar tus conocimientos. Suerte!!'.format(total)
+
+        if total > 7:
+            contexto['mensaje'] = 'FELICIDADES!! tus aciertos son:{} !'.format(total)
             return render(request, 'realizar_examen/realizar_examen.html', contexto)
 
+        else:
+            #print(lista_anexo)
+            contexto['mala_nota'] = lista_anexo
+            contexto['aciertos'] = total
 
+            return render(request, 'realizar_examen/realizar_examen.html', contexto)
 
     return render(request,'realizar_examen/realizar_examen.html',contexto)

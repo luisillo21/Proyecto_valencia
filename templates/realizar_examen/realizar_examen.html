@@ -19,15 +19,15 @@
         {% if mala_nota %}
                         <div class="card">
                             <div class="card-header bg-dark">
-                                <strong class="card-title text-light">{{mala_nota}}</strong>
+                                <strong class="card-title text-light">NUMERO DE ACIERTOS: {{aciertos}} <br> Click en las preguntas en las que te equivocaste </strong>
                             </div>
                             <div class="card-body text-white bg-danger">
-                                {% for a in preguntas %}
-                                    <a href="{{a.anexo}}" class="text-light text-center h5">{{a.pregunta}}</a><br><br>
+                                {%  for anexos in mala_nota %}
+                                        <a href="{{anexos.anexo}}" class="text-light text-center h5">{{anexos.pregunta}}</a><br><br>
                                 {% endfor %}
                             </div>
                         </div>
-        {% endif %}
+            {% endif %}
 
     <div class="card shadow">
         <form action="{% url 'evaluacion:realizar_examen' examen.id_examen %}" method="POST">
@@ -59,7 +59,7 @@
                                 <div class="form-group">
                                     <div class="input-group">
                                         <input type="submit" class="btn btn-success btn-block text-light" value="TERMINADO!!">
-                                        <a href="#" class="btn btn-danger btn-block text-light" >ME RINDO!!!</a>
+                                        <a href="{% url 'evaluacion:ver_examenes' %}" class="btn btn-danger btn-block text-light" >CANCELAR</a>
                                     </div>
                                 </div>
                             </div>
