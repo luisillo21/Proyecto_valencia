@@ -5,7 +5,7 @@
 
 <a href="{% url 'evaluacion:agregar_preguntas' %}" class="btn btn-primary text-light"> Agregar nuevo pregunta </a>
 
-{% if cursos %}
+{% if preguntas %}
 
             <div class="card">
                             <div class="card-header">
@@ -23,16 +23,18 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    {% for c in cursos %}
+                                    {% for c in preguntas %}
                                         <tr>
                                             <td>{{c.id_pregunta}}</td>
                                             <td>{{c.pregunta}}</td>
                                             <td>
                                                 {% for opc in c.opciones.all %}
                                                     Opcion:{{opc.descripcion}} Respuesta correcta? {{opc.respuesta}}
+                                                <br>
+                                                <hr>
                                                 {% endfor %}
                                             </td>
-                                            <td>{{c.link}}</td>
+                                            <td>{{c.anexo}}</td>
 
                                           <td>
                                             <a href="{% url 'evaluacion:editar_preguntas' c.id_pregunta %}" class="btn btn-primary">Editar</a>

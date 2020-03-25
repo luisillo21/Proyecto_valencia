@@ -1,55 +1,53 @@
 {% extends 'index.html' %} {% load crispy_forms_tags %}
-<!--               -->{% block titulo %} Profesora virtual | Listado de permisos
+<!--               -->{% block titulo %} Profesora virtual | Listado de Personas
 {% endblock titulo %}<!--  -->
 {% block body %}<!--  -->
 
 <a
   href="{% url 'seguridad:agregar_personas' %}"
   class="btn btn-primary text-light"
-  >Agregar nuevo persona</a
+  >Agregar nueva persona</a
 >
 
-{% if preguntas %}
-<div class="card">
-  <div class="card-header">
-    <strong class="card-title">PERSONAS</strong>
-  </div>
-  <div class="table-stats order-table ov-h">
-    <table class="table datatable text-center text-dark">
-      <thead>
-        <tr class="text-center text-dark">
-          <th>ID</th>
-          <th>Nombres</th>
-          <th>Apellidos</th>
-          <th>Cedula</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for p in preguntas %}
-        <tr>
-          <td>{{ p.id_pregunta }}</td>
-          <td>{{ p.nombres }}</td>
-          <td>{{ p.apellidos }}</td>
-          <td>{{ p.cedula }}</td>
-          <td>
-            <a
-              href="{% url 'seguridad:editar_personas' p.id_persona %}"
-              class="btn btn-primary"
-              >Editar</a
-            >
-            <a
-              href="{% url 'seguridad:eliminar_personas' p.id_persona %}"
-              class="btn btn-danger"
-              >Eliminar</a
-            >
+{% if per %}
+
+            <div class="card">
+                            <div class="card-header">
+                                <strong class="card-title">Asignacion | Cursos</strong>
+                            </div>
+                            <div class="card-body">
+                                <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Nombres</th>
+                                            <th>Apellidos</th>
+                                            <th>Cedula</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for c in per %}
+                                        <tr>
+                                            <td>{{c.id_persona}}</td>
+                                            <td>{{c.nombres}}</td>
+                                            <td>{{c.apellidos}}</td>
+                                            <td>{{c.cedula}}</td>
+                                          <td>
+            <a href="{% url 'seguridad:editar_personas' c.id_persona %}" class="btn btn-primary">Editar</a>
+            <a href="{% url 'seguridad:eliminar_personas' c.id_persona %}" class="btn btn-danger">Eliminar</a>
           </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
-</div>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+            </div>
 {% else %}
-<h1>No existen personas registradas </h1>
+<h1>No existen Personas registradas</h1>
+
+
+
 {% endif %} {% endblock body %}
+
+
