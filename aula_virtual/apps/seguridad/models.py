@@ -103,12 +103,14 @@ class Menu(models.Model):
     tipo_menu = models.CharField(max_length=45,blank=False,null=False, choices=TIPO_CHOICES)
     menu_padre = models.ForeignKey('self',on_delete=models.SET_NULL,null=True, blank=True, db_column='menu_padre')
     estado = models.CharField(blank=False,max_length=50,choices=ESTADO_CHOICES,null=False)
+    orden = models.IntegerField(blank=False, null=False)
     url = models.CharField(blank=False, null=False, max_length=60,default='#')
 
     class Meta:
         verbose_name = 'Menu'
-        verbose_name_plural = 'Menu',
+        verbose_name_plural = 'Menu'
         db_table = 'menu'
+        ordering = ['orden']
 
     def __str__(self):
         return self.nombre 
@@ -128,8 +130,7 @@ class Permisos(models.Model):
     ]
 
     id_permiso = models.AutoField(primary_key=True)
-    menu = models.ManyToManyField(
-        Menu, related_name="fk_menu", db_table='permiso_menu')
+    menu = models.ManyToManyField(Menu, related_name="fk_menu", db_table='permiso_menu')
     rol = models.ForeignKey(Roles, on_delete=models.CASCADE,related_name="fk_rol",unique=True,db_column='id_rol',blank=False, null=False)
     estado = models.CharField(blank=True,max_length=50,choices=ESTADO_CHOICES,null=True,default='ACTIVO')
 

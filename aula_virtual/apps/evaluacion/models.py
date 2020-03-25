@@ -58,7 +58,7 @@ class Opciones(models.Model):
         return self.id_opcion
 
     def __str__(self):
-        return self.descripcion
+        return '{} Respuesta: {}'.format(self.descripcion,self.respuesta )
 
     class Meta:
         verbose_name = 'Opcion',

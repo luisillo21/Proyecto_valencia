@@ -23,5 +23,4 @@ urlpatterns = [
     path('eliminar_asignaciones/<int:id>/',eliminar_asignacion,name='eliminar_asignaciones'),
 
 
-
 ]

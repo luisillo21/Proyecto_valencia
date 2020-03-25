@@ -32,7 +32,7 @@ class Alumno(models.Model):
     id_alumno = models.AutoField(primary_key=True)
     persona = models.ForeignKey(Personas,on_delete=models.CASCADE,related_name='fk_persona_alumno',null=False,db_column='persona_alumno')
     estado = models.CharField(max_length=45,null=True,blank=True,default='ACTIVO',choices=ESTADO_CHOICES)
-    curso = models.ForeignKey(Curso, on_delete=models.CASCADE,null=True,blank=True)
+    curso = models.ForeignKey(Curso, on_delete=models.CASCADE,null=True,blank=True, related_name='curso_alumno')
     estado = models.CharField(max_length=45,null=True,blank=True,default='ACTIVO',choices=ESTADO_CHOICES)
 
     class Meta:

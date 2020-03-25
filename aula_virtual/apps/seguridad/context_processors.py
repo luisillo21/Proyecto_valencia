@@ -1,3 +1,4 @@
+from aula_virtual.apps.asignacion.models import Alumno
 from .models import *
 
 def permisos(request):
@@ -6,6 +7,13 @@ def permisos(request):
          contexto = {}
          menu_padre = Menu.objects.filter(tipo_menu = 'PADRE')
          datos_usuarios = Usuario.objects.get(id_usuario = request.session.get('usuario'))
+
+         #pregunto si el usuario es un ALUMNO
+         if datos_usuarios.rol_usuario.rol_nombre == 'ALUMNO':
+            alumno = Alumno.objects.get(persona=datos_usuarios.id_persona)
+            if alumno:
+                contexto['alumno'] = alumno
+
          #ANTES DE TRAER LOS PERMISOS VALIDO SI EXISTE ALGUN REGISTRO 
          if Permisos.objects.filter(rol=datos_usuarios.rol_usuario,estado='ACTIVO').exists():
             #TRAIGO LOS PERMISOS QUE TIENE EL USUARIO LOGONEADO SEGUN SU ROL 

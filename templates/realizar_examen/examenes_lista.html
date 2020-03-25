@@ -1,0 +1,50 @@
+{% extends 'index.html' %} {% load crispy_forms_tags %}
+<!--               -->{% block titulo %} Profesora virtual | Listado de Cursos
+{% endblock titulo %}<!--  -->
+{% block body %}<!--  -->
+
+
+
+{% if examenes %}
+
+            <div class="card">
+                            <div class="card-header">
+                                <strong class="card-title">Asignacion | Examenes</strong>
+                            </div>
+                            <div class="card-body">
+                                <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Examenes</th>
+                                            <th>Materia</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for c in examenes %}
+                                        {% for curso in c.curso.all %}
+                                        {% if curso.id_curso == alumno.curso.id_curso %}
+                                            <tr>
+                                                <td>{{c.id_asig_examen}}</td>
+                                                <td>{{c.examen.nombre}}</td>
+                                                <td>{{c.examen.id_materia.descripcion}}</td>
+                                            <td>
+                                                <a href="{% url 'evaluacion:realizar_examen' c.examen.id_examen %}" class="btn btn-success">Relizar Examen</a>
+                                            </td>
+                                            </tr>
+                                        {% endif %}
+                                        {% endfor %}
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+            </div>
+{% else %}
+<h1>No existen Examenes registrados registrados</h1>
+
+
+
+{% endif %} {% endblock body %}
+
+

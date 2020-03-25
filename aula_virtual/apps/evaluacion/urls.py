@@ -23,4 +23,9 @@ urlpatterns = [
     path('agregar_materias/', AddMaterias.as_view(), name='agregar_materias'),
     path('edit_materias/<int:pk>', EditMaterias.as_view(), name='editar_materias'),
     path('eliminar_materias/<int:id>/', eliminar_materias, name='eliminar_materias'),
+
+
+#--Realizar evaluacion
+    path('ver_examenes/',ver_examenes,name='ver_examenes'),
+    path('realizar_examen/<int:id>',realizar_examen,name='realizar_examen'),
 ]

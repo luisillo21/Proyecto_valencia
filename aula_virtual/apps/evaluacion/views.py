@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect,render_to_response
 from django.views.generic import View,TemplateView,ListView,UpdateView,CreateView,DeleteView
 from django.http import HttpResponseRedirect, HttpResponse
 from aula_virtual.apps.seguridad.models import Usuario
+from random import shuffle, random
+from aula_virtual.apps.asignacion.models import Asignar_examen
 from .models import *
 from .forms import *
 from django.urls import reverse_lazy
@@ -154,3 +156,46 @@ def eliminar_materias(request, id):
     except Exception as e:
         return render(request, 'materias/eliminar_materias.html', {'error': e})
     return render(request, 'materias/eliminar_materias.html', {'materia': materia})
+
+
+
+def ver_examenes(request):
+    if 'usuario' in request.session:
+        consulta = Asignar_examen.objects.filter(estado='ACTIVO')
+        return render(request,'realizar_examen/examenes_lista.html',{'examenes':consulta})
+    else:
+        return redirect('seguridad:iniciar_sesion')
+
+def realizar_examen(request,id):
+    contexto = {}
+    lista_anexo =[]
+    examen = Examen.objects.get(id_examen=id)
+    preguntas = list(Pregunta.objects.filter(examen_id__id_examen= id)[:10])
+    contexto['examen'] = examen
+    contexto['preguntas'] = preguntas
+    total = 10
+
+
+    if request.method == 'POST':
+        for p in preguntas:
+            opcion = request.POST.get('pregunta_{}'.format(p.id_pregunta))
+            if opcion == None:
+                opcion = 0
+            for o in p.opciones.filter(respuesta = 'CORRECTA'):
+                if o.id_opcion == int(opcion):
+                    break
+                else:
+                    total = total - 1
+                    lista_anexo.append(p)
+        if total > 6:
+            contexto['mensaje'] = 'FELICIDADES!! tu nota es:{} !'.format(total)
+            return render(request, 'realizar_examen/realizar_examen.html', contexto)
+        if total <= 6:
+            contexto['anexos']: lista_anexo
+            print(lista_anexo)
+            contexto['mala_nota'] = 'NESECITAS MEJORAR AMIGO!! tu nota es:{}! Puedes revisar estos videos para reforzar tus conocimientos. Suerte!!'.format(total)
+            return render(request, 'realizar_examen/realizar_examen.html', contexto)
+
+
+
+    return render(request,'realizar_examen/realizar_examen.html',contexto)
