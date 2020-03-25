@@ -17,10 +17,10 @@
     <table class="table datatable text-center text-dark">
       <thead>
         <tr class="text-center text-dark">
-          <th>ID</th>
-          <th>Rol</th>
-          <th>Accesos a estos menus</th>
-          <th>Acciones</th>
+          <th class="text-dark">ID</th>
+          <th class="text-dark">Rol</th>
+          <th class="text-dark">Accesos a estos menus</th>
+          <th class="text-dark text-center">Acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -30,10 +30,10 @@
           <td>{{ p.rol.rol_nombre }}</td>
           <td>
             {% for m in p.menu.all %}
-            <li>{{ m.nombre }}</li>
+              <label>{{ m.nombre }}, </label>
             {% endfor %}
           </td>
-          <td>
+          <td class="text-center">
             <a
               href="{% url 'seguridad:editar_permiso' p.id_permiso %}"
               class="btn btn-primary"

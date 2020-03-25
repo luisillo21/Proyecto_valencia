@@ -9,7 +9,7 @@
   >Agregar nuevo persona</a
 >
 
-{% if per %}
+{% if preguntas %}
 <div class="card">
   <div class="card-header">
     <strong class="card-title">PERSONAS</strong>
@@ -26,9 +26,9 @@
         </tr>
       </thead>
       <tbody>
-        {% for p in per %}
+        {% for p in preguntas %}
         <tr>
-          <td>{{ p.id_persona }}</td>
+          <td>{{ p.id_pregunta }}</td>
           <td>{{ p.nombres }}</td>
           <td>{{ p.apellidos }}</td>
           <td>{{ p.cedula }}</td>
