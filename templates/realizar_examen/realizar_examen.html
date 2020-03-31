@@ -35,12 +35,12 @@
                             <div class="card-header bg-dark">
                                <center> <strong class="text-light text-center h4">{{examen.nombre}}</strong> </center>
                             </div>
-                            <div class="card-body card-block bg">
+                            <div class="card-body card-block ">
                                 <div class="row">
                                     {% for p in preguntas %}
                                     <div class="col-4">
                                         <div class="form-group">
-                                            <label class=" form-control-label text-success h5 text-center">{{p.pregunta}}</label>
+                                            <label class=" form-control-label text-dark h5 text-center">{{p.pregunta}}</label>
                                             <div class="input-group">
                                                 <select name="pregunta_{{p.id_pregunta}}" id="pregunta_{{p.id_pregunta}}" class="form-control-sm form-control">
                                                     <option value="ninguno" disabled selected>Seleccione una respuesta</option>
@@ -58,8 +58,8 @@
 
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <input type="submit" class="btn btn-success btn-block text-light" value="TERMINADO!!">
-                                        <a href="{% url 'evaluacion:ver_examenes' %}" class="btn btn-danger btn-block text-light" >CANCELAR</a>
+                                        <input type="submit" class="btn btn-success btn-block text-light" value="Finalizar">
+                                        <a href="{% url 'evaluacion:ver_examenes' %}" class="btn btn-danger btn-block text-light" >Cancelar</a>
                                     </div>
                                 </div>
                             </div>
