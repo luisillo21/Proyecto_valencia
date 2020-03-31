@@ -4,8 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Inicio de Sesión | PROFESORA VIRTUAL</title>
-    <meta name="description" content="Ela Admin - HTML5 Admin Template" />
+    <title>Bienvenidos a profesora virtualL</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <link
@@ -35,13 +34,13 @@
     <link rel="stylesheet" href="{% static 'css/cs-skin-elastic.css' %}" />
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
   </head>
-  <body class="bg-dark">
+  <body class="bg-info">
     <div class="sufee-login d-flex align-content-center flex-wrap">
       <div class="container">
         <div class="login-content">
           <div class="login-logo">
-            <a href="index.html">
-              <img class="align-content" src="media/logos/logo_1.png" alt="" />
+            <a href="#">
+              <img class="align-content" src="{% static 'images/logo-profesora.jpeg' %}" alt="" />
             </a>
           </div>
           <div class="login-form">
@@ -63,18 +62,18 @@
                   <strong>Advertencia: </strong> {{ error }}
                 </div>
                 {% endif %}
-                <label class="text-dark">Nombre de usuario</label>
                 <input
                   type="text"
                   class="form-control text-center"
                   id="usu"
-                  name="usu"
+                  placeholder="Nombre de usuario"
+                  name="usu" 
                 />
               </div>
               <div class="form-group">
-                <label class="text-dark">Contraseña</label>
                 <input
                   type="password"
+                  placeholder = "Contraseña"
                   class="form-control text-center"
                   id="pass"
                   name="pass"

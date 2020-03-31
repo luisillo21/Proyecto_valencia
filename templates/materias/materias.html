@@ -5,20 +5,20 @@
 
 <a
   href="{% url 'evaluacion:agregar_materias' %}"
-  class="btn btn-primary text-light"
+  class="btn btn-success text-light"
   >Agregar nueva materia</a
->
+><br><br>
 
 {% if materias %}
 
             <div class="card">
-                            <div class="card-header">
+                            <div class="card-header bg-dark text-light">
                                 <strong class="card-title">Asignacion | Materias</strong>
                             </div>
                             <div class="card-body">
                                 <table id="bootstrap-data-table" class="table table-striped table-bordered">
                                     <thead>
-                                        <tr>
+                                        <tr class="bg-dark text-light">
                                             <th>ID</th>
                                             <th>Descripcion</th>
                                             <th>Acciones</th>

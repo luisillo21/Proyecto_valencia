@@ -23,24 +23,24 @@
 
 <body>
     <!-- Left Panel -->
-    <aside id="left-panel" class="left-panel">
-        <nav class="navbar navbar-expand-sm navbar-default">
-            <div id="main-menu" class="main-menu">
-                <ul class="nav navbar-nav">
-                    <li class="active">
-                        <a href="#"><i class="menu-icon fa fa-laptop"></i>Inicio</a>
+    <aside id="left-panel" class="left-panel bg-dark">
+        <nav class="navbar navbar-expand-sm navbar-default bg-dark">
+            <div id="main-menu" class="main-menu bg-dark">
+                <ul class="nav navbar-nav bg-dark">
+                    <li class="active bg-dark bg-dark" >
+                        <a href="{% url 'seguridad:inicio' %}" class="text-light"><i class="menu-icon fa fa-laptop text-light"></i>Inicio</a>
                     </li>
 
                     
                     {% for p in lista_padre %}
-                    <li class="menu-item-has-children dropdown">
-                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-book"></i>{{p.nombre}}</a>
+                    <li class="menu-item-has-children dropdown text-light">
+                       <a href="#" class="dropdown-toggle text-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-folder text-light"></i>{{p.nombre}}</a>
                        
                         {% if permisos %}
-                            <ul class="sub-menu children dropdown-menu">   
+                            <ul class="sub-menu children dropdown-menu bg-dark">   
                                 {% for per in permisos.menu.all %}
                                     {% if per.menu_padre.id_menu == p.id_menu %}
-                                        <li><i class="fa fa-table"></i><a href="{% url per.url %}">{{per.nombre}}</a></li>
+                                        <li><i class="fa fa-folder-open-o text-light"></i><a href="{% url per.url %}" class="text-light">{{per.nombre}}</a></li>
                                     {% endif %}
                                 {% endfor %}
                             </ul>
@@ -57,26 +57,23 @@
     </aside>
     <!-- /#left-panel -->
     <!-- Right Panel -->
-    <div id="right-panel" class="right-panel">
+    <div id="right-panel" class="right-panel bg-dark">
         <!-- Header-->
-        <header id="header" class="header">
-            <div class="top-left">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="./"><img style="width:50px;" src="{% static 'images/logo_instituto.png' %}" alt="Logo"></a>
-                    <a class="navbar-brand hidden"  href="./"><img  src="{% static 'images/logo.png' %}" alt="Logo"></a>
+        <header id="header" class="header bg-dark">
+            <div class="top-left bg-dark">
+                <div class="navbar-header bg-dark">
+                    <a class="navbar-brand" href="#"><img style="width: 120%; height:80%;" src="{% static 'images/logo-sin-fondo.jpeg' %}" alt="Logo"></a>
                     <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
                 </div>
             </div>
             <div class="top-right">
-                <div class="header-menu">
-                    <div class="user-area dropdown float-right">
+                <div class="header-menu bg-dark">
+                    <div class="user-area dropdown float-right bg-dark">
                         <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img class="user-avatar rounded-circle" src="../media/{{datos_usuario.id_persona.foto}}" alt="User Avatar">
                         </a>
-                        <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="#"><i class="fa fa- user"></i>Perfil</a>
-                            <a class="nav-link" href="#"><i class="fa fa -cog"></i>Administración</a>
-                            <a class="nav-link" href="{% url 'seguridad:salir' %}"><i class="fa fa-power -off"></i>CERRAR SESION</a>
+                        <div class="user-menu dropdown-menu bg-dark">
+                            <a class="nav-link text-light" href="{% url 'seguridad:salir' %}"><i class="fa fa-power -off"></i>CERRAR SESION</a>
                         </div>
                     </div>
 
@@ -86,18 +83,65 @@
 
         <div class="content">
             <div class="animated fadeIn">
-                <div class="row">
-                    <div class="col-lg-12">
+                <div class="row justify-content-center">
+                    <div class="col-lg-7">
                       {% block body %}
-                        <div class="col-md-12 prueba">
-                            <div class="card bg-primary">
-                                <div class="card-body">
-                                    <blockquote class="blockquote mb-0 text-light text-center">
-                                        <h1 class="text-light">BIENVENIDO!! {{alumno}} </h1>
-                                        <footer class="blockquote-footer text-light">"Recibe la mejor educacion virtual " -<cite title="_ITSG">ITSG</cite></footer>
-                                    </blockquote>
+                            <div class="card shadow">
+                                <div class="card-body bg-dark">
+                                    <div class="card">
+                                        <img class="card-img-top" style="width: 95%; height:300px;" src="{% static 'images/logo-profesora.jpeg' %}" alt="Card image cap">
+                                        <div class="card-body">
+                                        <h3 class="card-title mb-4">Guia de usuario</h3>
+                                        {% if datos_usuario.rol_usuario.id_rol == 4 %}
+                                            <p class="card-text"><strong>Pasos para realizar tu evaluacion:</strong></p>
+                                            <p class="card-text">
+                                                <p class="card-text"> 1.-Click en'Estudiantes'.</p>
+                                                <p class="card-text"> 2.-Click en 'Realizar examen'.</p>
+                                                <p class="card-text"> 3.-Se mostrara una tabla con una lista de examenes asignados a tu curso.</p>
+                                                <p class="card-text"> 4.- Da click en el boton 'Realizar examen' que quieras realizar.</p>
+                                                <p class="card-text"> 5.- Se mostrar una pantalla con las preguntas del examen seleccionado.</p>
+                                                <p class="card-text"> SUERTE!!!!</p>
+                                            </p>
+                                        {% endif %}
+
+                                        {% if datos_usuario.rol_usuario.id_rol == 3 %}
+                                            <p class="card-text"><strong>Pasos para crear tu evaluacion:</strong></p>
+                                            <p class="card-text">
+                                                <p class="card-text"> 1.-Click en 'Examenes'.</p>
+                                                <p class="card-text"> 2.-Click en 'Gestion de opciones' y crea diferentes opciones. Crea opciones correctas e incorrecta para utilizar en tus preguntas</p>
+                                               <p class="card-text"> 3.-Click en 'Gestion de examenes' y crea direfentes examenes.</p>
+                                                <p class="card-text"> 4.-Click en 'Gestion de preguntas' y crea direfentes preguntas. <strong>Cuidado!! el examen debe tener mas de 10 preguntas para validar sobre el puntaje; caso contrario,no calificara sobre la nota completa.</strong></p>
+                                                <p class="card-text"> 5.- En 'Seccion profesor' esta la opcion de asignar examen donde podras enviar tu examen creado a uno o varios cursos.</p>
+                                                <p class="card-text"> 6.- En 'Gestion estudiante' podras crear usuarios de tipo estudiante los cuales seran los que realizen los examenes que hayas creado. previamente anda a Configutacion y gestion persona y agrega los datos personales de ese alumno</p>
+                                                <p class="card-text"> <strong>Si nesecitas crear una materia para ese examen ve a seccion profesor en la opcion materias y crea una materia especifica para tu examen(ejem: Matematicas,Lenguaje.)</strong></p>
+                                            </p>
+                                        {% endif %}
+
+                                        {% if datos_usuario.rol_usuario.id_rol == 2 %}
+                                        <p class="card-text"><strong>Pasos para crear usuarios:</strong></p>
+                                            <p class="card-text">
+                                                <p class="card-text"> 1.-Click en 'Configuraciones'.</p>
+                                                <p class="card-text"> 2.-En la opcion 'Gestion de personas' podras crear una persona, asi como editarlo o eliminarlo del sistema.</p>
+                                               <p class="card-text"> 3.-En la opcion 'Gestion de usuarios' crea usuarios que puedan ingresar al sistema.Debe estar creado la persona previamente</p>
+                                                <p class="card-text"> 4.--En la opcion 'Gestion de permisos', podras asignar acceso a un rol de entrar en los diferentes menu. <strong>Cuidado!! No es recomendable modificar esta seccion ya que estan configurados correctamente los permisos. los siguientes menus no deben ser seleccionados(Configuraciones,Seccion profesor,Estudiantes,examenes).</strong></p>
+                                            </p>
+
+                                        <hr style="background-color: black;">
+                                        <p class="card-text"><strong>Pasos para crear tu evaluacion:</strong></p>
+                                            <p class="card-text">
+                                                <p class="card-text"> 1.-Click en 'Examenes'.</p>
+                                                <p class="card-text"> 2.-Click en 'Gestion de opciones' y crea diferentes opciones. Crea opciones correctas e incorrecta para utilizar en tus preguntas</p>
+                                               <p class="card-text"> 3.-Click en 'Gestion de examenes' y crea direfentes examenes.</p>
+                                                <p class="card-text"> 4.-Click en 'Gestion de preguntas' y crea direfentes preguntas. <strong>Cuidado!! el examen debe tener mas de 10 preguntas para validar sobre el puntaje; caso contrario,no calificara sobre la nota completa.</strong></p>
+                                                <p class="card-text"> 5.- En 'Seccion profesor' esta la opcion de asignar examen donde podras enviar tu examen creado a uno o varios cursos.</p>
+                                                <p class="card-text"> 6.- En 'Gestion estudiante' podras crear usuarios de tipo estudiante los cuales seran los que realizen los examenes que hayas creado. previamente anda a Configutacion y gestion persona y agrega los datos personales de ese alumno</p>
+                                                <p class="card-text"> <strong>Si nesecitas crear una materia para ese examen ve a seccion profesor en la opcion materias y crea una materia especifica para tu examen(ejem: Matematicas,Lenguaje.)</strong></p>
+                                            </p>
+                                        {% endif %}
+                                        
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
                         </div>
                       {% endblock body %}
                 </div>
@@ -106,13 +150,10 @@
         <!-- /.content -->
         <div class="clearfix"></div>
         <!-- Footer -->
-        <footer class="site-footer">
-            <div class="footer-inner bg-white">
+        <footer class="site-footer bg-dark">
+            <div class="footer-inner bg-dark">
                 <div class="row">
-                    <div class="col-sm-6">
-                        Copyright &copy; 2020
-                    </div>
-                    <div class="col-sm-6 text-right">
+                    <div class="col-sm-12 text-right text-light h6">
                         Diseñado por: Aquino Mite Karen, Calle Bayona Jean, Castillo Charcopa Jeremy, Diaz Ortiz Derek, Zambrano Quimi Yelena.
                     </div>
                 </div>
@@ -143,6 +184,7 @@
         <script type="text/javascript">
         $(document).ready(function() {
           $('#bootstrap-data-table-export').DataTable();
+          $('.subtitle').toggleClass('text-light');
         });
         </script>
 

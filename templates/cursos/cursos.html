@@ -5,20 +5,20 @@
 
 <a
   href="{% url 'asignacion:agregar_cursos' %}"
-  class="btn btn-primary text-light"
+  class="btn btn-success text-light"
   >Agregar nuevo curso</a
->
+><br><br>
 
 {% if cursos %}
 
             <div class="card">
-                            <div class="card-header">
+                            <div class="card-header bg-dark text-light">
                                 <strong class="card-title">Asignacion | Cursos</strong>
                             </div>
                             <div class="card-body">
                                 <table id="bootstrap-data-table" class="table table-striped table-bordered">
                                     <thead>
-                                        <tr>
+                                        <tr class="bg-dark text-light">
                                             <th>ID</th>
                                             <th>Curso</th>
                                             <th>Paralelo</th>

@@ -6,8 +6,8 @@
 <form method="POST">
   {% csrf_token %}
   <div class="card">
-    <div class="card-header">
-      <strong>Formulario de Registro</strong>
+    <div class="card-header bg-dark text-light">
+      <strong>Permisos</strong>
     </div>
     <div class="card-body">
       {{ form.rol|as_crispy_field }} <br />

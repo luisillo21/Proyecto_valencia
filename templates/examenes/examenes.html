@@ -3,18 +3,18 @@
 {% endblock titulo %}<!--  -->
 {% block body %}<!--  -->
 
-<a href="{% url 'evaluacion:agregar_examenes' %}" class="btn btn-primary text-light"> Agregar nuevo examen </a>
+<a href="{% url 'evaluacion:agregar_examenes' %}" class="btn btn-success text-light"> Agregar nuevo examen </a><br><br>
 
 {% if examenes %}
 
             <div class="card">
-                            <div class="card-header">
-                                <strong class="card-title">Asignacion | Preguntas</strong>
+                            <div class="card-header bg-dark text-light">
+                                <strong class="card-title">Asignacion | Examenes</strong>
                             </div>
                             <div class="card-body">
                                 <table id="bootstrap-data-table" class="table table-striped table-bordered">
                                     <thead>
-                                        <tr>
+                                        <tr class="bg-dark text-light">
                                             <th>ID</th>
                                             <th>Nombre</th>
                                             <th>Materia</th>
